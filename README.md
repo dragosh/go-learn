@@ -1,4 +1,4 @@
-# GO Learn
+# GO Labs
 
 https://go.dev/ref/spec
 https://gobyexample.com
