@@ -1,8 +1,4 @@
-# GO Labs
-
-https://go.dev/ref/spec
-https://gobyexample.com
-
+# GO learn
 ## Topics:
 
 - [x] Debuggingss
@@ -23,3 +19,9 @@ https://gobyexample.com
   - [ ] Logging
 - [ ] Concurrency and Parallelism
 - [ ] Standard Library
+
+
+### Ref
+- https://go.dev/ref/spec
+- https://gobyexample.com
+
