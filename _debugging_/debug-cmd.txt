@@ -1,0 +1,7 @@
+b main.go:15
+b main.go:19
+c
+p hello
+c
+locals
+p hello

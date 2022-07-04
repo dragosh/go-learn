@@ -1,0 +1,32 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Title}}</title>
+  <base href="/">
+  <script src="/app/dist/main.min.js"></script>
+
+</head>
+
+<body class="markdown-body">
+  <button id="quit">Close</button>
+  <h3>{{.Title}}</h3>
+  <ul>
+    <li>User: {{.User.Username}}</li>
+    <li>Path: {{.Path}}</li>
+  </ul>
+
+  <nav>Navigation</nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/page">Page</a></li>
+    <li><a href="/exit">Close</a></li>
+
+  </ul>
+  <div id="content" ></div>
+
+
+  {{define "Content"}}<div hidden id="markdown">{{.}}</div>{{end}}
+</body>
+
+</html>

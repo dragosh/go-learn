@@ -1,51 +1,47 @@
 package watcher
 
 import (
-	"fmt"
 	"log"
-	"os"
 	"regexp"
 	"time"
 
 	"github.com/radovskyb/watcher"
 )
 
-func Start() {
+func Start(path string, callback func(string)) {
+	w := watcher.New()
 
-	watch := watcher.New()
+	// Ignore hidden files.
+	w.IgnoreHiddenFiles(true)
 
-	cwd, err := os.Getwd()
-	if err != nil {
+	//only notify rename and move events.
+	w.FilterOps(watcher.Write, watcher.Move, watcher.Rename, watcher.Create)
+
+	// add recursive current directory
+	if err := w.AddRecursive(path); err != nil {
+		log.Fatalln(err)
+	}
+	if err := w.Ignore("./internal", "./pkg"); err != nil {
 		log.Fatalln(err)
 	}
 
-	if err := watch.Add(cwd); err != nil {
-		log.Fatalln(err)
-	}
-
-	watch.IgnoreHiddenFiles(true)
-
-	watch.AddFilterHook(watcher.RegexFilterHook(regexp.MustCompile(".md$"), false))
+	r := regexp.MustCompile("^*(md|json)$")
+	w.AddFilterHook(watcher.RegexFilterHook(r, false))
 
 	go func() {
 		for {
 			select {
-			case event := <-watch.Event:
-				log.Println("File Changed: ", event) // Print the event's info.
-			case err := <-watch.Error:
+			case event := <-w.Event:
+				callback(event.Path)
+			case err := <-w.Error:
 				log.Fatalln(err)
-			case <-watch.Closed:
+			case <-w.Closed:
 				return
 			}
 		}
 	}()
 
-	for path, f := range watch.WatchedFiles() {
-		fmt.Printf("Watching: %s: %s\n", path, f.Name())
-	}
-	// Start the watching process - it'll check for changes every 100ms.
-	if err := watch.Start(time.Millisecond * 100); err != nil {
+	if err := w.Start(time.Millisecond * 10); err != nil {
 		log.Fatalln(err)
 	}
-
 }

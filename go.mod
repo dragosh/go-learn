@@ -1,10 +1,11 @@
-module dragosh.kmade.net/go-learn
+module github.com/dragosh/go-learn
 
-go 1.16
+go 1.18
 
 require (
-	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
+	github.com/evanw/esbuild v0.14.48
 	github.com/radovskyb/watcher v1.0.7
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/urfave/cli/v2 v2.3.0
+	github.com/webview/webview v0.0.0-20220608114710-fad806fbb420
 )
+
+require golang.org/x/sys v0.0.0-20210908233432-aa78b53d3365 // indirect
